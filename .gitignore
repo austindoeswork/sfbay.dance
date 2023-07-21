@@ -1,6 +1,11 @@
 tmp*
-venv/
 *.json
+*.pyc
+
 geckodriver.log
 __pycache__
+
+venv/
+build/
+
 
