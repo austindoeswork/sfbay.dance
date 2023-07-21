@@ -1,4 +1,6 @@
 tmp*
 venv/
 *.json
+geckodriver.log
+__pycache__
 

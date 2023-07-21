@@ -1,8 +1,8 @@
 # local
 from db import db
-import odc
-import citydance
-import dmt
+from scrapers import odc
+from scrapers import citydance
+from scrapers import dmt
 import utils
 # packages
 from datetime import datetime
@@ -17,22 +17,22 @@ DMT_DAYS        = 1
 
 def main():
     event_db = db.EventDB("./db/events.json")
-    #  event_db.reset()
+    event_db.reset()
 
-    #  events = []
+    events = []
 
-    #  # DMT
-    #  dmt_events = dmt.scrape(DMT_DAYS)
-    #  event_db.add_bulk(dmt_events)
+    # DMT
+    dmt_events = dmt.scrape(DMT_DAYS)
+    event_db.add_bulk(dmt_events)
 
 
-    #  # ODC
-    #  odc_events = odc.scrape(ODC_DAYS)
-    #  event_db.add_bulk(odc_events)
+    # ODC
+    odc_events = odc.scrape(ODC_DAYS)
+    event_db.add_bulk(odc_events)
 
-    #  #  CITY DANCE
-    #  cd_events = citydance.scrape(CITY_DANCE_DAYS)
-    #  event_db.add_bulk(cd_events)
+    #  CITY DANCE
+    cd_events = citydance.scrape(CITY_DANCE_DAYS)
+    event_db.add_bulk(cd_events)
 
     all_events = event_db.all()
     for e in all_events:
