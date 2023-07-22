@@ -4,6 +4,8 @@ todo.txt
 tmp*
 *.pyc
 events.json
+scrape_config.json
+main
 
 geckodriver.log
 __pycache__

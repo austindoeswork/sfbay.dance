@@ -1,6 +1,6 @@
-# SFBAY.DANCE
+# sfbay.dance
 
-## SUMMARY
+## Summary
 
 sfbay.dance is a dance class aggregator for the San Francisco Bay Area. It has been built by dancers, for dancers.
 
@@ -30,22 +30,12 @@ Notes:
 % cd sfbay.dance
 ```
 
-
-## SERVER dev setup
-
-```
-# install golang
-% brew install go
-
-
-```
-## SCRAPER dev setup
+## Scraper dev setup
 
 ```
 # check python version
 % python3 --version
 Python 3.10.6
-
 
 # setup python env
 % python3 -m venv venv
@@ -57,9 +47,39 @@ Python 3.10.6
 {
 	"db_path": "/<PATH_TO>/sfbay.dance/app/assets/events.json"
 }
-# create the events json file
+# create the empty events json file
 % echo "{}" > /<PATH_TO>/sfbay.dance/app/assets/events.json
 
 # to run the scraper
 % python collect.py
+```
+
+## Server dev setup
+
+```
+# NOTE: if you haven't run the scraper, you won't have any data
+
+# install node/npm if not already installed
+% brew install node
+# install golang if not already installed
+% brew install go
+
+# in one console window
+% cd app/_ui/
+% npm run watch
+
+# in another console window
+% cd app/
+% go run cmd/server/main.go
+
+# then go to localhost:8080 and have fun <3
+```
+
+## Building a binary
+
+```
+% cd app/_ui
+% npm run build
+% cd ..
+% go build cmd/server/main.go
 ```

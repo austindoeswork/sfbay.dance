@@ -21,6 +21,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
+    // TODO this should prob be a config var
     // This is the all events object
     fetch('/assets/events.json')
       .then(response => response.json())

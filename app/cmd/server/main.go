@@ -1,11 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/fs"
-	"io/ioutil"
 	"log"
 	"mime"
 	"net/http"
@@ -17,7 +15,7 @@ import (
 )
 
 func main() {
-	c, err := getConfig()
+	c, err := app.GetConfig()
 	if err != nil {
 		log.Println("Error while loading config")
 		log.Println(err)
@@ -84,26 +82,6 @@ func handleSite(w http.ResponseWriter, r *http.Request) {
 
 	// TODO better logging
 	log.Println("file", path, "copied", n, "bytes")
-}
-
-type Config struct {
-	Env  string `json:"ENV"`
-	Port string `json:"PORT"`
-}
-
-func getConfig() (*Config, error) {
-	file, err := ioutil.ReadFile("./server_config.json")
-	if err != nil {
-		return nil, err
-	}
-
-	c := Config{}
-	err = json.Unmarshal([]byte(file), &c)
-	if err != nil {
-		return nil, err
-	}
-
-	return &c, nil
 }
 
 var uiFS fs.FS
