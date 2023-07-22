@@ -1,5 +1,0 @@
-setup.py
-sfbaydance.egg-info/PKG-INFO
-sfbaydance.egg-info/SOURCES.txt
-sfbaydance.egg-info/dependency_links.txt
-sfbaydance.egg-info/top_level.txt

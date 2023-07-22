@@ -13,6 +13,7 @@ __pycache__
 venv/
 build/
 assets/
+*-info/
 
 
 
