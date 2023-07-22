@@ -15,7 +15,7 @@
   "watch": {
     "build": {
       "patterns": [ "src" ],
-	  "extensions": "js"
+	  "extensions": "js,css"
 	}
   },
   "scripts": {

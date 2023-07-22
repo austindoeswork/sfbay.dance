@@ -1,0 +1,28 @@
+.event {
+		border-bottom: 2px solid black;
+		padding: 3px;
+}
+.event-row {
+		display: flex;
+}
+
+.event-date {
+		/* move to very right */
+		margin-left: auto;
+		order: 2;
+}
+
+.event-location {
+		width: 130px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		margin-right: 2px;
+}
+
+.event-title {
+		margin-left: 132px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+}

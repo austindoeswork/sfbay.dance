@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import EventRow from './components/EventRow.js'
+
+import './App.css';
+import './components/EventRow.css'
 
 class Main extends Component {
   constructor(props) {
@@ -13,8 +15,8 @@ class Main extends Component {
 
   parseData = (data) => {
     let events = [];
+    // TODO sort / classify into days?
     for (const [key, value] of Object.entries(data)) {
-      console.log(key, value);
       events.push(value);
     }
     return events;
@@ -32,11 +34,15 @@ class Main extends Component {
         });
       });
   }
+
   render() {
-    console.log(this.state)
+    const events = this.state.events
+
     return (
       <div id="main">
-        yo dawgg
+        { events.map( e => (
+            <EventRow event={e} />
+        ))}
       </div>
     );
   }
