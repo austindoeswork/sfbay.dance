@@ -1,11 +1,16 @@
+*.sh
+notes.txt
+todo.txt
 tmp*
-*.json
 *.pyc
+events.json
 
 geckodriver.log
 __pycache__
 
 venv/
 build/
+assets/
+
 
 

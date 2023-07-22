@@ -7,6 +7,7 @@ import utils
 # packages
 from datetime import datetime
 import pprint
+import json
 
 # TODO config
 # TODO date stuff, not an index
@@ -14,25 +15,35 @@ import pprint
 ODC_DAYS        = 1
 CITY_DANCE_DAYS = 6
 DMT_DAYS        = 1
+CONFIG_FILE = "./scrape_config.json"
+
+def load_config():
+    with open(CONFIG_FILE) as f:
+        return json.load(f)
+
 
 def main():
-    event_db = db.EventDB("./db/events.json")
+    c = load_config()
+    event_db = db.EventDB(c["db_path"])
+
+    # TODO archive old events instead of reseting the whole db
     event_db.reset()
 
     events = []
 
     # DMT
     dmt_events = dmt.scrape(DMT_DAYS)
-    event_db.add_bulk(dmt_events)
-
+    events += dmt_events
 
     # ODC
     odc_events = odc.scrape(ODC_DAYS)
-    event_db.add_bulk(odc_events)
+    events += odc_events
 
     #  CITY DANCE
     cd_events = citydance.scrape(CITY_DANCE_DAYS)
-    event_db.add_bulk(cd_events)
+    events += cd_events
+
+    event_db.add_bulk(events)
 
     all_events = event_db.all()
     for e in all_events:
@@ -40,7 +51,6 @@ def main():
         ev.pprint_oneline()
 
     # TODO rae
-    # TODO check for duplicates
 
 if __name__== "__main__":
     main()
