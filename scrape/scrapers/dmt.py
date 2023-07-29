@@ -5,6 +5,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from datetime import datetime
+from datetime import timedelta
 from dateutil import parser as dateParser
 from pyquery import PyQuery as pq
 
@@ -14,15 +15,29 @@ STUDIO_LOGO  = "https://dancemissiontheater.org/wp-content/uploads/2018/12/DMT.B
 
 def scrape(scrape_date):
     events = []
-    url = "https://clients.mindbodyonline.com/classic/mainclass?studioid=15734&date=7%2f18%2f2023&loc=1"
+
+
+    today     = datetime.today()
+    today_str = today.strftime("%-m%%2f%e%%2f%Y")
+    nextweek     = today + timedelta(days=7)
+    nextweek_str = nextweek.strftime("%-m%%2f%e%%2f%Y")
+
+    url = "https://clients.mindbodyonline.com/classic/mainclass?studioid=15734&loc=1&date="
+    today_url    = url + today_str
+    nextweek_url = url + nextweek_str
 
     firefox_options = Options()
     firefox_options.add_argument('--headless')  # Run Firefox in headless mode
     driver = webdriver.Firefox(options=firefox_options)
-    driver.get(url)
-    time.sleep(4)
 
-    html = driver.page_source
+    driver.get(today_url)
+    time.sleep(4)
+    today_html = driver.page_source
+
+    driver.get(nextweek_url)
+    time.sleep(4)
+    nextweek_html = driver.page_source
+
     driver.quit()
 
     #  FOR TESTING
@@ -30,7 +45,8 @@ def scrape(scrape_date):
     #  with open('tmp_dmt_full.html', 'r') as file:
         #  html = file.read()
 
-    events = parse(html)
+    events = parse(today_html)
+    events += parse(nextweek_html)
 
     return events
 

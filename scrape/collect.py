@@ -31,15 +31,13 @@ def main():
 
     events = []
 
-    # ODC
-    odc_events = odc.scrape(ODC_DAYS)
-    events += odc_events
-    #  return
-
     # DMT
     dmt_events = dmt.scrape(DMT_DAYS)
     events += dmt_events
 
+    # ODC
+    odc_events = odc.scrape(ODC_DAYS)
+    events += odc_events
 
     #  CITY DANCE
     cd_events = citydance.scrape(CITY_DANCE_DAYS)

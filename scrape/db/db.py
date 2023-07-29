@@ -51,7 +51,6 @@ class EventDB:
         def by_date(x):
             return x["date"]
         all_events = list(self.events.values())
-        print(len(all_events))
 
         return sorted(all_events, key=by_date)
 
@@ -65,4 +64,3 @@ class EventDB:
         print("loading from:", path)
         with open(path, 'r') as f:
             self.events = json.load(f)
-        print("events: ", len(self.events))
