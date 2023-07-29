@@ -1,6 +1,7 @@
 import subprocess
 import pprint
 import hashlib
+import pytz
 from datetime import datetime
 from dateutil import parser as dateParser
 
@@ -126,3 +127,9 @@ def duration(start, end):
     hours  = int(delta.total_seconds() // 3600)
     minutes = int((delta.total_seconds() % 3600) // 60)
     return str(hours) + ":" + str(minutes)
+
+def today()
+    tz = pytz.timezone("US/Pacific")
+    return datetime.today().astimezone(tz)
+
+

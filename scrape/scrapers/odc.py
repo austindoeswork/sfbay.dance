@@ -12,7 +12,7 @@ STUDIO_LOGO  = "https://odc.dance/sites/all/themes/odc/images/odc-dance-logo.png
 def scrape(scrape_date):
     events = []
 
-    today = datetime.today()
+    today = utils.today()
     today_str = today.strftime("%Y-%m-%d")
     # TODO images
     # TODO make scrape_date actually select the date, but this is ok for now I think

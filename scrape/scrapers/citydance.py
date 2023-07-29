@@ -17,7 +17,7 @@ def scrape(num_days):
     curl = '''curl 'https://www.citydancesf.com/%s' '''
     days = ['mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays', 'sundays']
 
-    today = datetime.today().weekday()
+    today = utils.today().weekday()
     for i in range(num_days):
         weekday = days[utils.rollover(today + i, len(days))]
         cmd = curl % (weekday)

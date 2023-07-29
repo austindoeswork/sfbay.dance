@@ -17,7 +17,7 @@ def scrape(scrape_date):
     events = []
 
 
-    today     = datetime.today()
+    today     = utils.today()
     today_str = today.strftime("%-m%%2f%e%%2f%Y")
     nextweek     = today + timedelta(days=7)
     nextweek_str = nextweek.strftime("%-m%%2f%e%%2f%Y")
