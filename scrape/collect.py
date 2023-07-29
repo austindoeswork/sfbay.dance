@@ -26,22 +26,31 @@ def main():
     c = load_config()
     event_db = db.EventDB(c["db_path"])
 
-    # TODO archive old events instead of reseting the whole db
-    event_db.reset()
-
     events = []
 
     # DMT
-    dmt_events = dmt.scrape(DMT_DAYS)
-    events += dmt_events
+    try:
+        dmt_events = dmt.scrape(DMT_DAYS)
+        events += dmt_events
+    except:
+        print("dmt: error")
 
     # ODC
-    odc_events = odc.scrape(ODC_DAYS)
-    events += odc_events
+    try:
+        odc_events = odc.scrape(ODC_DAYS)
+        events += odc_events
+    except:
+        print("odc: error")
 
     #  CITY DANCE
-    cd_events = citydance.scrape(CITY_DANCE_DAYS)
-    events += cd_events
+    try:
+        cd_events = citydance.scrape(CITY_DANCE_DAYS)
+        events += cd_events
+    except:
+        print("cds: error")
+
+    # TODO archive old events instead of reseting the whole db
+    event_db.reset()
 
     event_db.add_bulk(events)
     print("dmt: ", len(dmt_events))

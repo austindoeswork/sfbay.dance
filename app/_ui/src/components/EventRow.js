@@ -6,7 +6,7 @@ import {
   FaInstagram,
 } from "react-icons/fa"
 
-export default class EventRow extends React.Component {
+export default class EventRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,7 @@ export default class EventRow extends React.Component {
     return (
       <div class="event">
         <div class="event-logo">
-          <img class="event-logo-img" src={event["logo"]}/>
+          <img class="event-logo-img" alt={event["location"]} src={event["logo"]}/>
         </div>
         <div class="event-body">
           <div class="event-row">

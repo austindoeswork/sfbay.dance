@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import strftime from '../util/strftime.js'
 import EventRow from './EventRow.js'
 
 import {
   FaCalendarAlt,
 } from "react-icons/fa"
 
-export default class EventBlock extends React.Component {
+export default class EventBlock extends Component {
 
   constructor(props) {
     super(props);

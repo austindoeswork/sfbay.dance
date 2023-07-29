@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import EventRow from './components/EventRow.js'
 import EventBlock from './components/EventBlock.js'
 
 import './App.css';
@@ -7,21 +6,6 @@ import './components/EventRow.css'
 import './components/EventBlock.css'
 
 import strftime from './util/strftime.js'
-
-class Test extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <div id="test">
-        <div class="stick"> STICKY! </div>
-        <h1> yo </h1>
-      </div>
-    );
-  }
-
-}
 
 class Main extends Component {
   constructor(props) {
@@ -44,7 +28,7 @@ class Main extends Component {
     let events = []; // [ {event}... ]
     let eventsByDate = []; // [ {title: str, events: [ {event}...] }...]
     // TODO sort / classify into days?
-    for (let [key, value] of Object.entries(data)) {
+    for (let [, value] of Object.entries(data)) {
       // parse date string
       const d = new Date(value["date"]);
       value["date"] = d;
@@ -65,7 +49,7 @@ class Main extends Component {
     for (const e of events) {
       const dStr = e["dateStr"]
 
-      if (foundDates[dStr] == undefined) {
+      if (foundDates[dStr] === undefined) {
         foundDates[dStr] = true;
 
         if (eventList) {
@@ -101,7 +85,7 @@ class Main extends Component {
   }
 
   render() {
-    const { events, eventsByDate } = this.state;
+    const { eventsByDate } = this.state;
     return (
       <div id="main">
         <div id="events">
