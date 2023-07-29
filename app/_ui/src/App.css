@@ -1,3 +1,41 @@
+/* ########## */
+/*   custom   */
+/* ########## */
+
+#test {
+  /* [> display: flex; <] */
+  /* [> justify-content: space-around; <] */
+  /* [> align-items: flex-start; <] */
+  border: 2px dashed rgba(114, 186, 94, 0.35);
+  height: 400px;
+  background: rgba(114, 186, 94, 0.05);
+}
+
+.stick {
+  position: sticky;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border: 2px solid blue;
+}
+.non-stick {
+  position: sticky;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  border: 2px solid red;
+}
+
+/* #events { */
+  /* width: 40px; */
+  /* height: 40px; */
+  /* padding: 10px; */
+/* } */
+
+/* ########### */
+/*   default   */
+/* ########### */
+
 .App {
   text-align: center;
 }

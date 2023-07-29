@@ -5,14 +5,21 @@ from datetime import datetime
 from dateutil import parser as dateParser
 from pyquery import PyQuery as pq
 
-STUDIO_NAME = "ODC"
+STUDIO_NAME  = "ODC"
+STUDIO_PRICE = 21.00
+STUDIO_LOGO  = "https://odc.dance/sites/all/themes/odc/images/odc-dance-logo.png"
 
 def scrape(scrape_date):
     events = []
 
+    today = datetime.today()
+    today_str = today.strftime("%Y-%m-%d")
     # TODO images
     # TODO make scrape_date actually select the date, but this is ok for now I think
-    curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D=2023-07-18' '''
+    #  curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D=2023-07-18' '''
+
+    curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D='''
+    curl += today_str + "'"
     res = utils.shell(curl)
     decoded = bytes(res, "utf-8").decode("unicode_escape")
 
@@ -67,7 +74,8 @@ def parse_session(session):
     link = session(".bw-widget__signup-now").attr('data-url')
     event.link     = link
 
-    event.price    = 21.00
+    event.price    = STUDIO_PRICE
+    event.logo     = STUDIO_LOGO
 
     # TODO some weird encoding stuff going on, too lazy to fix rn
     #      also remove empty lines n shit

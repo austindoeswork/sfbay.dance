@@ -46,6 +46,7 @@ class Event:
 
     def is_valid(self):
         if self.location \
+        and self.logo    \
         and self.date    \
         and self.title   \
         and self.teacher \

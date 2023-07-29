@@ -31,26 +31,33 @@ def main():
 
     events = []
 
+    # ODC
+    odc_events = odc.scrape(ODC_DAYS)
+    events += odc_events
+    #  return
+
     # DMT
     dmt_events = dmt.scrape(DMT_DAYS)
     events += dmt_events
 
-    # ODC
-    odc_events = odc.scrape(ODC_DAYS)
-    events += odc_events
 
     #  CITY DANCE
     cd_events = citydance.scrape(CITY_DANCE_DAYS)
     events += cd_events
 
     event_db.add_bulk(events)
+    print("dmt: ", len(dmt_events))
+    print("odc: ", len(odc_events))
+    print("cds: ", len(cd_events))
 
-    all_events = event_db.all()
-    for e in all_events:
-        ev = utils.Event.fromDict(e)
-        ev.pprint_oneline()
+    #  all_events = event_db.all()
+    #  for e in all_events:
+        #  ev = utils.Event.fromDict(e)
+        #  ev.pprint_oneline()
 
     # TODO rae
+    # TODO mood and moves
+    # TODO fix dmt
 
 if __name__== "__main__":
     main()

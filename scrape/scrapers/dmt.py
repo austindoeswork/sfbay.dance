@@ -8,8 +8,9 @@ from datetime import datetime
 from dateutil import parser as dateParser
 from pyquery import PyQuery as pq
 
-STUDIO_NAME = "DMT"
+STUDIO_NAME  = "DMT"
 STUDIO_PRICE = 21.00
+STUDIO_LOGO  = "https://dancemissiontheater.org/wp-content/uploads/2018/12/DMT.BLACK_.MAGENTA-e1545363675115.png"
 
 def scrape(scrape_date):
     events = []
@@ -19,7 +20,7 @@ def scrape(scrape_date):
     firefox_options.add_argument('--headless')  # Run Firefox in headless mode
     driver = webdriver.Firefox(options=firefox_options)
     driver.get(url)
-    time.sleep(2)
+    time.sleep(4)
 
     html = driver.page_source
     driver.quit()
@@ -88,9 +89,11 @@ def parse_event(row, date_str):
         if link == None: return event
 
         # ex:  https://clients.mindbodyonline.com/ASP/res_a.asp?tg=34&classId=2472&classDate=7/22/2023&clsLoc=1
+        studio_id_param = "&studioid=15734"
         url = "https://clients.mindbodyonline.com"
         link = link.split(",")[-1][2:-4]
         url += link
+        url += studio_id_param
         event.link = url
 
     # title
@@ -119,6 +122,7 @@ def parse_event(row, date_str):
 
     # misc
     event.price = STUDIO_PRICE
+    event.logo  = STUDIO_LOGO
 
     return event
 

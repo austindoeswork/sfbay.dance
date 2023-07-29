@@ -1,15 +1,99 @@
 .event {
-		border-bottom: 2px solid black;
-		padding: 3px;
+		height: 54px;
+		padding: 3px 5px 3px 5px;
+		position: relative;
 }
+
+.event-logo {
+		position: absolute;
+		width: 54px;
+		height: 54px;
+		line-height: 54px;
+		text-align: center;
+}
+
+.event-logo-img {
+		max-width:100%;
+		max-height:100%;
+		vertical-align: middle;
+}
+
+.event-body {
+		margin-left: 64px;
+		height: inherit;
+		display: flex;
+		justify-content: space-around;
+		flex-direction: column;
+}
+
 .event-row {
 		display: flex;
+		justify-content: space-between;
+}
+
+.event-info-block {
+		display: flex;
+		margin-left: auto;
+		order: 2;
+		align-items: center;
+}
+
+.event-icons {
+		display: flex;
+		font-size: 20px;
+		margin-right: 5px;
+		width: 45px;
+		justify-content: space-between;
+}
+
+.event-icon {
+		cursor: pointer;
+}
+
+.event-icon:hover {
+		color: #a8008f;
+}
+
+.event-link {
+		text-decoration: none;
+		border: 1px solid #0001ee;
+		border-radius: 2px;
+		padding: 2px;
+}
+
+.event-link:visited {
+		border: 1px solid #561a8b;
+}
+
+.event-link:hover {
+		background: #0001ee;
+		color: white;
+		border: 1px solid white;
+		border-radius: 2px;
+}
+
+.event-link:visited:hover {
+		background: #561a8b;
+}
+
+.event-link-wrapper {
+		white-space: nowrap;
+		color: white;
+		margin-top: 2px;
+		margin-left: 2px;
 }
 
 .event-date {
-		/* move to very right */
-		margin-left: auto;
-		order: 2;
+		display: flex;
+		justify-content: right;
+
+		white-space: nowrap;
+		font-family: ui-monospace;
+		background-color: #edecec;
+		padding: 0px 2px 0px 2px;
+}
+.event-date-item {
+		margin: 2px;
 }
 
 .event-location {
@@ -20,9 +104,16 @@
 		margin-right: 2px;
 }
 
-.event-title {
-		margin-left: 132px;
+.event-title, .event-teacher {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+}
+
+.event-title {
+		font-weight: bold;
+}
+
+.event-teacher {
+		padding-top: 3px;
 }

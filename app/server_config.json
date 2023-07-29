@@ -1,4 +1,6 @@
 {
 	"ENV": "dev",
-	"PORT": ":8080"
+	"PORT": ":8080",
+	"CERTFILE": "",
+	"KEYFILE": ""
 }

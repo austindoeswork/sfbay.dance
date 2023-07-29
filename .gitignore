@@ -6,6 +6,7 @@ tmp*
 events.json
 scrape_config.json
 main
+server
 
 geckodriver.log
 __pycache__

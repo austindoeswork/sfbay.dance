@@ -8,8 +8,9 @@ from dateutil import parser as dateParser
 
 import utils
 
-STUDIO_NAME = "City Dance Studios"
+STUDIO_NAME  = "City Dance Studios"
 STUDIO_PRICE = 23.0
+STUDIO_LOGO  = "https://images.squarespace-cdn.com/content/v1/5738b9abab48de6e3b53189b/6193f76e-ce5e-4310-9ddb-80513a176733/city+dance+logo+for+mind+body+app.jpg?format=1500w"
 
 def scrape(num_days):
     events = []
@@ -55,6 +56,7 @@ def parse(html):
 
     current_event = utils.Event(STUDIO_NAME)
     current_event.price = STUDIO_PRICE
+    current_event.logo  = STUDIO_LOGO
     for line in lines:
         is_event = False
         is_link  = False
@@ -76,6 +78,7 @@ def parse(html):
                 events.append(current_event)
             current_event = utils.Event(STUDIO_NAME)
             current_event.price = STUDIO_PRICE
+            current_event.logo  = STUDIO_LOGO
             continue
 
         if is_link:
@@ -114,7 +117,6 @@ def parse(html):
     # may not end on a "break"
 
     if current_event.is_valid():
-        current_event.price = STUDIO_PRICE
         events.append(current_event)
 
     return events

@@ -15,6 +15,7 @@ import (
 )
 
 func main() {
+	// config
 	c, err := app.GetConfig()
 	if err != nil {
 		log.Println("Error while loading config")
@@ -23,25 +24,38 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	// handlers
+
 	// path: /
-	if c.Env != "prod" {
+	if c.Env == "prod" || c.Env == "test" {
+		// runs from embedded in prod
+		mux.HandleFunc("/", handleSite)
+	} else {
 		// runs "raw" in dev mode
 		devHandler := http.StripPrefix("/", http.FileServer(http.Dir("./_ui/build")))
 		mux.Handle("/", devHandler)
-	} else {
-		// runs from embedded in prod
-		mux.HandleFunc("/", handleSite)
 	}
 
 	// path: /assets/
 	assetHandler := http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets")))
 	mux.Handle("/assets/", assetHandler)
 
-	// TODO https
-	log.Printf("\nBlastoff...\n ENV -- %s\nPORT -- %s", c.Env, c.Port)
-	if err := http.ListenAndServe(c.Port, mux); err != nil {
-		log.Println("server failed:", err)
+	var httpErr error
+	if c.Env == "prod" {
+		go http.ListenAndServe(":80", http.HandlerFunc(redirect))
+
+		certFile := c.CertFile
+		keyFile := c.KeyFile
+		log.Printf("\nRUNNING IN: PRODUCTION...\n")
+		httpErr = http.ListenAndServeTLS(c.Port, certFile, keyFile, mux)
+	} else {
+		log.Printf("\nRUNNING IN: DEVELOPMENT...\n")
+		httpErr = http.ListenAndServe(c.Port, mux)
 	}
+	if httpErr != nil {
+		log.Println("server failed:", httpErr)
+	}
+
 }
 
 func handleSite(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +96,12 @@ func handleSite(w http.ResponseWriter, r *http.Request) {
 
 	// TODO better logging
 	log.Println("file", path, "copied", n, "bytes")
+}
+
+func redirect(w http.ResponseWriter, req *http.Request) {
+	http.Redirect(w, req,
+		"https://"+req.Host+req.URL.String(),
+		http.StatusMovedPermanently)
 }
 
 var uiFS fs.FS
