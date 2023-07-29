@@ -128,7 +128,7 @@ def duration(start, end):
     minutes = int((delta.total_seconds() % 3600) // 60)
     return str(hours) + ":" + str(minutes)
 
-def today()
+def today():
     tz = pytz.timezone("US/Pacific")
     return datetime.today().astimezone(tz)
 
