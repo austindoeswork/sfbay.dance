@@ -11,12 +11,12 @@ class EventDB:
         self.load_from_file(path, teacher_path)
 
     def prep(self, event):
-        if event.teacher_link: return
+        if event.teacher_link is not None: return
 
         clean_teacher = utils.clean_teacher(event.teacher)
         if clean_teacher in self.teachers:
             event.teacher_link = self.teachers[clean_teacher]
-        return
+        return event
 
 
     def add(self, event):
@@ -26,7 +26,7 @@ class EventDB:
             event.pprint_safe()
             return
 
-        self.prep(event)
+        event = self.prep(event)
         e_hash = event.hash()
         e_dict = event.__dict__
 
@@ -77,6 +77,7 @@ class EventDB:
         print("loading from:", path)
         with open(path, 'r') as f:
             self.events = json.load(f)
+        print("loading teachers from:", teacher_path)
         with open(teacher_path, 'r') as f:
             reader = csv.reader(f)
             for row in reader:

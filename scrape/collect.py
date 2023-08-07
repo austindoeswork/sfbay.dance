@@ -63,10 +63,21 @@ def main():
     print("odc: ", len(odc_events))
     print("cds: ", len(cd_events))
 
-    #  all_events = event_db.all()
-    #  for e in all_events:
-        #  ev = utils.Event.fromDict(e)
-        #  ev.pprint_oneline()
+    all_events = event_db.all()
+
+    linkless_teachers = [];
+    for e in all_events:
+        ev = utils.Event.fromDict(e)
+        if ev.teacher_link is None:
+            clean_teacher = utils.clean_teacher(ev.teacher)
+            linkless_teachers.append(clean_teacher)
+
+    uniq = list(set(linkless_teachers))
+    uniq.sort()
+    print("LINKLESS TEACHERS:")
+    for t in uniq: print(t)
+
+
 
     # TODO rae
     # TODO mood and moves
