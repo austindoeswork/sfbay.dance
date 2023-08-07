@@ -2,6 +2,7 @@ import subprocess
 import pprint
 import hashlib
 import pytz
+import re
 from datetime import datetime
 from dateutil import parser as dateParser
 
@@ -17,6 +18,7 @@ class Event:
         self.duration = None
         self.title    = None
         self.teacher  = None
+        self.teacher_link = None
         self.link     = None
         self.price    = None
         self.notes    = []
@@ -33,6 +35,7 @@ class Event:
         e.duration = d["duration"]
         e.title    = d["title"]
         e.teacher  = d["teacher"]
+        e.teacher_link  = d["teacher_link"]
         e.link     = d["link"]
         e.price    = d["price"]
         e.notes    = d["notes"]
@@ -112,6 +115,21 @@ valid:    %s'''
         print("NONE" if len(self.notes) == 0 else "\n".join(self.notes))
 
 # MISC
+
+def clean_teacher(teacher):
+    regexes = [
+        [ '''\(.*\)''',  ''], # parens
+        [ '''[^\w\s]''', ''], # special chars
+        [ '''\+.*''',    ''], # plus TODO how to handle this?
+    ]
+
+    clean = teacher
+    for match, replacement in regexes:
+        clean = re.sub(match, replacement, clean)
+
+    clean = clean.strip()
+    clean = clean.lower()
+    return clean
 
 def shell(cmd):
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, text=True)

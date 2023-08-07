@@ -24,7 +24,7 @@ def load_config():
 
 def main():
     c = load_config()
-    event_db = db.EventDB(c["db_path"])
+    event_db = db.EventDB(c["db_path"], c["teacher_path"])
 
     events = []
     dmt_events = []
