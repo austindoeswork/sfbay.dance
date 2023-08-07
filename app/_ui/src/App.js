@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
 import EventBlock from './components/EventBlock.js'
-
+import EventList from './components/EventList.js'
 import './App.css';
-import './components/EventRow.css'
-import './components/EventBlock.css'
+import parseEvents from './util/parse.js'
 
-import strftime from './util/strftime.js'
+import {BrowserView, MobileView} from 'react-device-detect';
+// import Carousel from 'react-elastic-carousel';
+
+class Header extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    }
+  }
+
+  render() {
+    return (
+      <div id="header">
+        IM THE HEADER
+      </div>
+    )
+  }
+}
 
 class Main extends Component {
   constructor(props) {
@@ -17,64 +34,13 @@ class Main extends Component {
     }
   }
 
-  newEventList = (title) => {
-    return {
-      title: title,
-      events: [],
-    }
-  }
-
-  parseData = (data) => {
-    let events = []; // [ {event}... ]
-    let eventsByDate = []; // [ {title: str, events: [ {event}...] }...]
-    // TODO sort / classify into days?
-    for (let [, value] of Object.entries(data)) {
-      // parse date string
-      const d = new Date(value["date"]);
-      value["date"] = d;
-      value["dateStr"] = strftime("%a, %b %e", d)
-      value["timeStr"] = strftime("%l:%M %p", d)
-      events.push(value);
-    }
-
-
-    // sort events by date
-    events.sort((a,b) => {
-        return a["date"] - b["date"]
-      }
-    );
-
-    let foundDates = {};
-    let eventList;
-    for (const e of events) {
-      const dStr = e["dateStr"]
-
-      if (foundDates[dStr] === undefined) {
-        foundDates[dStr] = true;
-
-        if (eventList) {
-          eventsByDate.push(eventList)
-        }
-        eventList = this.newEventList(dStr);
-        eventList.events.push(e);
-      } else {
-        eventList.events.push(e);
-      }
-    }
-    if (eventList) {
-      eventsByDate.push(eventList)
-    }
-
-    return { events: events, eventsByDate: eventsByDate };
-  }
-
+  // MAIN API REQUEST
   componentDidMount() {
-    // TODO this should prob be a config var
     // This is the all events object
     fetch('/assets/events.json')
       .then(response => response.json())
       .then(json => {
-        const {events, eventsByDate} = this.parseData(json);
+        const {events, eventsByDate} = parseEvents(json);
 
         this.setState({
           srcData: json,
@@ -86,13 +52,23 @@ class Main extends Component {
 
   render() {
     const { eventsByDate } = this.state;
+
     return (
       <div id="main">
-        <div id="events">
-          { eventsByDate.map( e => (
-              <EventBlock eventList={e} />
-          ))}
-        </div>
+        <MobileView>
+          <div id="mobile">
+            { eventsByDate.map( e => (
+                <EventBlock eventList={e} />
+            ))}
+          </div>
+        </MobileView>
+        <BrowserView>
+          <div id="web">
+            { eventsByDate.map( e => (
+                <EventList eventList={e} />
+            ))}
+          </div>
+        </BrowserView>
       </div>
     );
   }
@@ -100,9 +76,10 @@ class Main extends Component {
 
 function App() {
   return (
-    <>
+    <div id="body">
+      <Header />
       <Main />
-    </>
+    </div>
   );
 }
 

@@ -16,7 +16,6 @@ STUDIO_LOGO  = "https://dancemissiontheater.org/wp-content/uploads/2018/12/DMT.B
 def scrape(scrape_date):
     events = []
 
-
     today     = utils.today()
     today_str = today.strftime("%-m%%2f%e%%2f%Y")
     nextweek     = today + timedelta(days=7)

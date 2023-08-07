@@ -2,35 +2,46 @@
 /*   custom   */
 /* ########## */
 
-#test {
-  /* [> display: flex; <] */
-  /* [> justify-content: space-around; <] */
-  /* [> align-items: flex-start; <] */
-  border: 2px dashed rgba(114, 186, 94, 0.35);
-  height: 400px;
-  background: rgba(114, 186, 94, 0.05);
+:root {
+		--header-height: 70px;
 }
 
-.stick {
-  position: sticky;
-  top: 0;
-  width: 40px;
-  height: 40px;
-  border: 2px solid blue;
-}
-.non-stick {
-  position: sticky;
-  top: 0;
-  width: 40px;
-  height: 40px;
-  border: 2px solid red;
+html, body {
+		height: 100%;
+		margin: 0;
+		overflow: hidden;
 }
 
-/* #events { */
-  /* width: 40px; */
-  /* height: 40px; */
-  /* padding: 10px; */
-/* } */
+#body {
+		height: 100vh;
+}
+
+#header {
+		height: var(--header-height);
+		background: orange;
+}
+
+#main {
+		height: calc(100vh - var(--header-height));
+		background: white;
+		overflow: hidden;
+}
+
+#mobile {
+		height: calc(100vh - var(--header-height));
+		overflow: scroll;
+		background: #f6f6f6;
+}
+
+#web {
+		overflow-x: scroll;
+		overflow-y: hidden;
+		white-space: nowrap;
+}
+
+.list {
+		display: inline-block;
+}
 
 /* ########### */
 /*   default   */

@@ -1,0 +1,29 @@
+.list {
+		height: 100%;
+		width: 410px;
+		position: relative;
+
+		margin: 15px;
+}
+
+.list-header {
+		height: 32px;
+
+		font-weight: 700;
+		font-size: 20px;
+		font-family: sans-serif;
+		line-height: 28px;
+		text-align: center;
+}
+
+.list-body {
+		height: calc(100vh - 150px);
+		min-height: calc(100vh - 150px);
+
+		background: #f1f1f1;
+		overflow: scroll;
+		border-radius: 10px;
+		border: 1px solid #80808026;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+		margin: 5px;
+}

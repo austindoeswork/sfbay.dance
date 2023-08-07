@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import EventRow from './EventRow.js'
-import './EventBlock.css'
+import './EventList.css'
 
-import {
-  FaCalendarAlt,
-} from "react-icons/fa"
-
-export default class EventBlock extends Component {
+export default class EventList extends Component {
 
   constructor(props) {
     super(props);
@@ -22,15 +18,11 @@ export default class EventBlock extends Component {
   render() {
     const { title, events } = this.state;
     return (
-      <div class="block">
-        <div class="block-header">
-          <div class="block-date-wrapper">
-            <div class="block-date">
-              { title }
-            </div>
-          </div>
+      <div class="list">
+        <div class="list-header">
+          { title }
         </div>
-        <div class="event-list">
+        <div class="list-body">
           { events.map( e => (
               <EventRow event={e} />
           ))}

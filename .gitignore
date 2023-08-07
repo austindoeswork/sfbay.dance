@@ -7,6 +7,7 @@ events.json
 scrape_config.json
 main
 server
+run.sh
 
 geckodriver.log
 __pycache__
