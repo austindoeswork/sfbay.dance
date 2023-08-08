@@ -5,6 +5,10 @@ import './App.css';
 import parseEvents from './util/parse.js'
 
 import {BrowserView, MobileView} from 'react-device-detect';
+
+import {
+  BiSearchAlt2
+} from "react-icons/bi"
 // import Carousel from 'react-elastic-carousel';
 
 class Header extends Component {
@@ -18,7 +22,22 @@ class Header extends Component {
   render() {
     return (
       <div id="header">
-        IM THE HEADER
+        <div class="header-block">
+          <div id="header-logo">
+            <img src="/breaker.png"/>
+          </div>
+          <div id="header-title">
+            SFBAY.DANCE
+          </div>
+        </div>
+        <div class="header-block search-wrapper">
+          < BiSearchAlt2 />
+          <input
+             class="search"
+             type="search"
+             placeholder="search classes"
+          />
+        </div>
       </div>
     )
   }

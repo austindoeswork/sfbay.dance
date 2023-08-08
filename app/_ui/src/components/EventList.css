@@ -1,3 +1,7 @@
+:root {
+		--list-header-height: 32px;
+}
+
 .list {
 		height: 100%;
 		width: 410px;
@@ -7,7 +11,7 @@
 }
 
 .list-header {
-		height: 32px;
+		height: var(--list-header-height);
 
 		font-weight: 700;
 		font-size: 20px;
@@ -17,10 +21,10 @@
 }
 
 .list-body {
-		height: calc(100vh - 150px);
-		min-height: calc(100vh - 150px);
+		height: calc(100vh - var(--list-header-height) - var(--header-height) - 40px);
+		min-height: calc(100vh - var(--list-header-height) - var(--header-height) - 40px);
 
-		background: #f1f1f1;
+		background: var(--color-grey);
 		overflow: scroll;
 		border-radius: 10px;
 		border: 1px solid #80808026;

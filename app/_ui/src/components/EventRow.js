@@ -38,16 +38,42 @@ export default class EventRow extends Component {
     }
   }
 
-  copyAction = (text) => {
+  copyText = (id) => {
+    console.log("copying:", id);
+    var input = document.querySelector("#" + id);
+
+    if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+      // handle iOS devices
+      input.contenteditable = true;
+      input.readonly = false;
+
+      var range = document.createRange();
+      range.selectNodeContents(input);
+
+      var selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      input.setSelectionRange(0, 999999);
+    } else {
+      // other devices are easy
+      console.log(input);
+      input.select()
+    }
+    let res = document.execCommand('copy');
+    console.log(res);
+  }
+
+  copyAction = (id) => {
     return (e) => {
       e.stopPropagation();
       console.log("copy text");
-      navigator.clipboard.writeText(text)
+      this.copyText(id);
       toast('link copied!');
     }
   }
 
   renderActions = (event) => {
+    const inputId = "link_"+event["id"]
     return (
       <div class="actions">
         <div
@@ -67,9 +93,14 @@ export default class EventRow extends Component {
           }
           <div
             class="action-btn"
-            onClick={this.copyAction(event["link"])}
+            onClick={this.copyAction(inputId)}
           >
             < FaShareAlt />
+            <input
+              id={inputId}
+              class="hidden"
+              value={event["link"]}
+            />
           </div>
         </div>
       </div>
@@ -80,9 +111,7 @@ export default class EventRow extends Component {
   render() {
     const { event, selected } = this.state;
     const timeStr = strftime("%l:%M %P", event["date"])
-    // const actions = selected ? this.renderActions(event) : null;
     const actions = this.renderActions(event);
-      // selected ? this.renderActions(event) : null;
     return (
       <div
         className={
