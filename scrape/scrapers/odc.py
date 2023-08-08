@@ -12,14 +12,13 @@ STUDIO_LOGO  = "https://odc.dance/sites/all/themes/odc/images/odc-dance-logo.png
 def scrape(scrape_date):
     events = []
 
-    today = utils.today()
-    today_str = today.strftime("%Y-%m-%d")
+    date_str = scrape_date.strftime("%Y-%m-%d")
     # TODO images
     # TODO make scrape_date actually select the date, but this is ok for now I think
     #  curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D=2023-07-18' '''
 
     curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D='''
-    curl += today_str + "'"
+    curl += date_str + "'"
     res = utils.shell(curl)
     decoded = bytes(res, "utf-8").decode("unicode_escape")
 

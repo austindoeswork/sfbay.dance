@@ -6,13 +6,13 @@ from scrapers import dmt
 import utils
 # packages
 from datetime import datetime
+from datetime import timedelta
 import pprint
 import json
 
 # TODO config
 # TODO date stuff, not an index
 # TODO ? instagrams for teachers?
-ODC_DAYS        = 1
 CITY_DANCE_DAYS = 6
 DMT_DAYS        = 1
 CONFIG_FILE = "./scrape_config.json"
@@ -42,7 +42,10 @@ def main():
     # ODC
     print("odc: start")
     try:
-        odc_events = odc.scrape(ODC_DAYS)
+        today = utils.today()
+        next_week = utils.today() + timedelta(days=7)
+        odc_events = odc.scrape(today)
+        odc_events += odc.scrape(next_week)
         events += odc_events
     except Exception as error:
         print("odc:", error)

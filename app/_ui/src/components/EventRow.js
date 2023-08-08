@@ -57,12 +57,14 @@ export default class EventRow extends Component {
           Sign up
         </div>
         <div class="action-block">
-          <div
-            class="action-btn"
-            onClick={this.linkAction("instagram.com")}
-          >
-            < FaInstagram />
-          </div>
+          { event["teacher_link"] ? (
+            <div
+              class="action-btn"
+              onClick={this.linkAction(event["teacher_link"])} >
+              < FaInstagram />
+            </div>
+          ) : null
+          }
           <div
             class="action-btn"
             onClick={this.copyAction(event["link"])}

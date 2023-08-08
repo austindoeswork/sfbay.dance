@@ -8,6 +8,7 @@ from dateutil import parser as dateParser
 
 import utils
 
+# TODO add more time than 1 week, annoying
 STUDIO_NAME  = "City Dance Studios"
 STUDIO_PRICE = 23.0
 STUDIO_LOGO  = "https://images.squarespace-cdn.com/content/v1/5738b9abab48de6e3b53189b/6193f76e-ce5e-4310-9ddb-80513a176733/city+dance+logo+for+mind+body+app.jpg?format=1500w"
