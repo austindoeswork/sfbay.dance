@@ -7,8 +7,6 @@ export default class EventList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: props.eventList.title,
-      events: props.eventList.events,
     }
   }
 
@@ -16,7 +14,7 @@ export default class EventList extends Component {
   }
 
   render() {
-    const { title, events } = this.state;
+    const { title, events } = this.props;
     return (
       <div class="list">
         <div class="list-header">

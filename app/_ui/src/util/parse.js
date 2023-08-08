@@ -45,8 +45,7 @@ function cleanTitle(title) {
   return newTitle;
 }
 
-// export default function strftime(sFormat, date) {
-export default function parseEvents(data) {
+function parseEvents(data) {
   let events = []; // [ {event}... ]
   let eventsByDate = []; // [ {title: str, events: [ {event}...] }...]
   // TODO sort / classify into days?
@@ -94,3 +93,40 @@ export default function parseEvents(data) {
   return { events: events, eventsByDate: eventsByDate };
 }
 
+function filterEvents(events, filter) {
+  if (filter.length <= 2) { return events; }
+
+  let newEvents = [];
+  let f = filter.toLowerCase();
+
+  for (let e of events) {
+    const title = e["title"].toLowerCase();
+    const teacher = e["teacher"].toLowerCase();
+    const location = e["location"].toLowerCase();
+    if (title.includes(f) ||
+      teacher.includes(f) ||
+      location.includes(f)
+    ) {
+      newEvents.push(e);
+    }
+  }
+  return newEvents;
+}
+
+function filterEventsByDate(evsByDate, filter) {
+  let ret = [];
+
+  for (let list of evsByDate) {
+    let newList = newEventList(list.title);
+    let filteredEvents = filterEvents(list.events, filter);
+
+    if (filteredEvents.length === 0) { continue }
+    newList.events = filteredEvents;
+
+    ret.push(newList);
+  }
+
+  return ret;
+}
+
+export { parseEvents, filterEvents, filterEventsByDate };

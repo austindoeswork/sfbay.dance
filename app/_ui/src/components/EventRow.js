@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import strftime from '../util/strftime.js'
+import checkMobile from '../util/misc.js'
 import './EventRow.css'
+
 
 import toast, { toastConfig } from 'react-simple-toasts';
 import 'react-simple-toasts/dist/theme/dark.css';
@@ -11,13 +13,13 @@ import {
 
 toastConfig({
   theme: 'dark',
+  position: 'top-center',
 });
 
 export default class EventRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      event: props.event,
       selected: false,
     }
   }
@@ -38,8 +40,12 @@ export default class EventRow extends Component {
     }
   }
 
+  hideKeyboard = (elem) =>{
+      document.activeElement.blur();
+      elem.blur();
+  };
+
   copyText = (id) => {
-    console.log("copying:", id);
     var input = document.querySelector("#" + id);
 
     if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
@@ -56,17 +62,15 @@ export default class EventRow extends Component {
       input.setSelectionRange(0, 999999);
     } else {
       // other devices are easy
-      console.log(input);
       input.select()
     }
     let res = document.execCommand('copy');
-    console.log(res);
+    this.hideKeyboard(input);
   }
 
   copyAction = (id) => {
     return (e) => {
       e.stopPropagation();
-      console.log("copy text");
       this.copyText(id);
       toast('link copied!');
     }
@@ -109,7 +113,8 @@ export default class EventRow extends Component {
   }
 
   render() {
-    const { event, selected } = this.state;
+    const { selected } = this.state;
+    const { event } = this.props;
     const timeStr = strftime("%l:%M %P", event["date"])
     const actions = this.renderActions(event);
     return (

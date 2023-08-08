@@ -108,6 +108,7 @@
 }
 
 .action-btn {
+		cursor: pointer;
 		border: 1px solid var(--action-color);
 		background: var(--action-color);
 		color: black;
