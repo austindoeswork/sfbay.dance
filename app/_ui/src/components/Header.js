@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './Header.css';
+import checkMobile from '../util/misc.js'
 
 import {
-  BiSearchAlt2
+  BiSearchAlt2,
+  BiX
 } from "react-icons/bi"
 
 export default class Header extends Component {
@@ -25,9 +27,11 @@ export default class Header extends Component {
           <div id="header-logo">
             <img src="/breaker.png"/>
           </div>
-          <div id="header-title">
-            SFBAY.DANCE
-          </div>
+          { checkMobile() ? null :
+            <div id="header-title">
+              SFBAY.DANCE
+            </div>
+          }
         </div>
         <div class="header-block search-wrapper">
           < BiSearchAlt2 />
@@ -38,6 +42,9 @@ export default class Header extends Component {
              value={this.props.query}
              onChange={this.updateQuery}
           />
+          { !this.props.query || this.props.query.length <= 0 ? null :
+            <BiX class="x-clear" onClick={()=>this.props.updateQuery("")} />
+          }
         </div>
       </div>
     )

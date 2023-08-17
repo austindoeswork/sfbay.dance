@@ -45,10 +45,12 @@ function cleanTitle(title) {
   return newTitle;
 }
 
+// (NOTE eventually BE should do this, doesn't make sense to recalc all this)
 function parseEvents(data) {
   let events = []; // [ {event}... ]
   let eventsByDate = []; // [ {title: str, events: [ {event}...] }...]
-  // TODO sort / classify into days?
+  let studios = [];
+
   for (let [, value] of Object.entries(data)) {
     // parse date string
     const d = new Date(value["date"]);
@@ -57,7 +59,6 @@ function parseEvents(data) {
     value["timeStr"] = strftime("%l:%M %p", d)
     events.push(value);
   }
-
 
   // sort events by date
   events.sort((a,b) => {
@@ -69,6 +70,7 @@ function parseEvents(data) {
     e["title"] = cleanTitle(e["title"]);
   }
 
+  // DATES
   let foundDates = {};
   let eventList;
   for (const e of events) {
@@ -90,27 +92,36 @@ function parseEvents(data) {
     eventsByDate.push(eventList)
   }
 
-  return { events: events, eventsByDate: eventsByDate };
-}
-
-function filterEvents(events, filter) {
-  if (filter.length <= 2) { return events; }
-
-  let newEvents = [];
-  let f = filter.toLowerCase();
-
-  for (let e of events) {
-    const title = e["title"].toLowerCase();
-    const teacher = e["teacher"].toLowerCase();
-    const location = e["location"].toLowerCase();
-    if (title.includes(f) ||
-      teacher.includes(f) ||
-      location.includes(f)
-    ) {
-      newEvents.push(e);
+  // STUDIOS
+  let foundStudios = {};
+  for (const e of events) {
+    const name = e["location"]; // TODO studio ids
+    if (foundStudios[name] === undefined) {
+      foundStudios[name] = true;
+      studios.push({
+        name: name,
+        logo: e["logo"],
+      });
     }
   }
-  return newEvents;
+  // sort events by date
+  studios.sort((a,b) => {
+      return a["name"] - b["name"]
+    }
+  );
+
+  return { events: events, eventsByDate: eventsByDate, studios: studios };
+}
+
+// TODO how to think about events / events by date...
+// this is getting messy
+
+function filterEvents(events, filter) {
+  const studios = filter.studios;
+  if (studios.length <= 0) { return events; }
+
+  const res = events.filter((e) => studios.includes(e["location"]));
+  return res;
 }
 
 function filterEventsByDate(evsByDate, filter) {
@@ -129,4 +140,40 @@ function filterEventsByDate(evsByDate, filter) {
   return ret;
 }
 
-export { parseEvents, filterEvents, filterEventsByDate };
+function queryEvents(events, query) {
+  if (query.length <= 2) { return events; }
+
+  let newEvents = [];
+  let f = query.toLowerCase();
+
+  for (let e of events) {
+    const title = e["title"].toLowerCase();
+    const teacher = e["teacher"].toLowerCase();
+    const location = e["location"].toLowerCase();
+    if (title.includes(f) ||
+      teacher.includes(f) ||
+      location.includes(f)
+    ) {
+      newEvents.push(e);
+    }
+  }
+  return newEvents;
+}
+
+function queryEventsByDate(evsByDate, query) {
+  let ret = [];
+
+  for (let list of evsByDate) {
+    let newList = newEventList(list.title);
+    let queryedEvents = queryEvents(list.events, query);
+
+    if (queryedEvents.length === 0) { continue }
+    newList.events = queryedEvents;
+
+    ret.push(newList);
+  }
+
+  return ret;
+}
+
+export { parseEvents, queryEvents, queryEventsByDate, filterEventsByDate };

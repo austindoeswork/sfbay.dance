@@ -11,7 +11,7 @@ from pyquery import PyQuery as pq
 
 STUDIO_NAME  = "DMT"
 STUDIO_PRICE = 21.00
-STUDIO_LOGO  = "https://dancemissiontheater.org/wp-content/uploads/2018/12/DMT.BLACK_.MAGENTA-e1545363675115.png"
+STUDIO_LOGO  = "/imgs/dmt.png"
 
 def scrape(scrape_date):
     events = []

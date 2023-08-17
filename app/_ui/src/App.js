@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import Header from './components/Header.js'
+import Filter from './components/Filter.js'
 import EventBlock from './components/EventBlock.js'
 import EventList from './components/EventList.js'
 import './App.css';
-import { parseEvents, filterEventsByDate } from './util/parse.js'
+import { parseEvents, queryEventsByDate, filterEventsByDate } from './util/parse.js'
 import {BrowserView, MobileView} from 'react-device-detect';
+
+import {
+  BiX,
+  BiStore,
+} from "react-icons/bi"
+
 
 class Main extends Component {
   constructor(props) {
@@ -12,9 +19,16 @@ class Main extends Component {
     this.state = {
       loaded: false,
       srcData: {},
+      studios: [],
       events: [],
       eventsByDate: [],
       srcEventsByDate: [],
+      defaultFilter: {
+        studios: [],
+      },
+      currentFilter: {
+        studios: [],
+      },
     }
   }
 
@@ -24,12 +38,13 @@ class Main extends Component {
     fetch('/assets/events.json')
       .then(response => response.json())
       .then(json => {
-        const {events, eventsByDate} = parseEvents(json);
+        const {events, eventsByDate, studios} = parseEvents(json);
 
         this.setState({
           loaded: true,
           srcData: json,
           events: events,
+          studios: studios,
           eventsByDate: eventsByDate,
           srcEventsByDate: eventsByDate,
         });
@@ -66,12 +81,24 @@ class Main extends Component {
   }
 
   updateQuery = (query) => {
-    const newEvsByDate = filterEventsByDate(
+    const newEvsByDate = queryEventsByDate(
       this.state.srcEventsByDate, query);
 
     this.setState({
       eventsByDate: newEvsByDate,
       query: query,
+    });
+  }
+
+  updateFilter = (filter) => {
+    const newEvsByDate = filterEventsByDate(
+      this.state.srcEventsByDate, filter);
+
+    console.log(newEvsByDate);
+
+    this.setState({
+      eventsByDate: newEvsByDate,
+      currentFilter: filter,
     });
   }
 
@@ -102,11 +129,11 @@ class Main extends Component {
   render() {
     const { eventsByDate } = this.state;
 
-    let r;
+    let body;
     if (eventsByDate.length === 0) {
-      r = this.renderEmpty();
+      body = this.renderEmpty();
     } else {
-      r = <>
+      body = <>
         {this.renderMobile(eventsByDate)}
         {this.renderWeb(eventsByDate)}
       </>;
@@ -118,8 +145,14 @@ class Main extends Component {
           query={this.state.query}
           updateQuery={this.updateQuery}
         />
+        <Filter
+          studios={this.state.studios}
+          defaultFilter={this.state.defaultFilter}
+          currentFilter={this.state.currentFilter}
+          updateFilter={this.updateFilter}
+        />
         <div id="main">
-          {r}
+          {body}
         </div>
       </>
     );

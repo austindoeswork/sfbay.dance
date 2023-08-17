@@ -16,6 +16,7 @@ toastConfig({
   position: 'top-center',
 });
 
+// TODO fix bug where selected row stays open after filtering
 export default class EventRow extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +32,10 @@ export default class EventRow extends Component {
   }
 
   componentDidMount() {
+  }
+
+  componenetDidUpdate() {
+
   }
 
   linkAction = (url) => {

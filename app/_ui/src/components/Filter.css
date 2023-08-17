@@ -1,0 +1,115 @@
+#filter {
+		background: var(--color-grey);
+		display: flex;
+		padding: 2px 0px;
+}
+.filter-btn {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		border: 1px solid var(--color-darkgrey);
+		color: var(--color-darkgrey);
+		background: white;
+		padding: 2px;
+		border-radius: 5px;
+		margin: 0px 8px;
+}
+.filter-btn.selected {
+		color: white;
+		background: var(--main-action-color);
+		border: 1px solid var(--main-action-color);
+}
+.filter-btn:hover {
+		background: white;
+		border: 1px solid black;
+		color: black;
+}
+.filter-btn > svg {
+		margin-right: 2px;
+}
+
+#modal-backdrop {
+		position: absolute;
+		top: 0px;
+		z-index: 2;
+		background: #80808080;
+		height: 100%;
+		width: 100%;
+}
+.modal {
+		/* visibility: hidden; */
+		background: var(--color-grey);
+		border: 1px solid #80808026;
+		border-radius: 10px;
+		box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+		/* height: 90%; */
+		left: calc(50% - 175px);
+		position: absolute;
+		top: calc(var(--header-height) + 25px);
+		width: 350px;
+		z-index: 3;
+}
+.modal-header {
+		display: flex;
+		justify-content: center;
+		height: 25px;
+		padding-top: 3px;
+		align-items: center;
+}
+.modal-title {
+		display: flex;
+}
+.modal-exit {
+		position: absolute;
+		top: 4px;
+		right: 0px;
+}
+.clear-selection-btn {
+		background: var(--main-action-color);
+		color: white;
+		border-radius: 10px;
+		padding: 1px 5px;
+		cursor: pointer;
+		margin-left: 5px;
+		margin-top: -1px;
+}
+.clear-selection-btn:hover {
+		background: white;
+		color: var(--main-action-color);
+		border: 1px solid  var(--main-action-color);
+		padding: 0px 4px;
+}
+
+.studio-row {
+		align-items: center;
+		display: flex;
+		background: white;
+		margin: 5px;
+		padding: 5px;
+		border-radius: 8px;
+		cursor: pointer;
+}
+.studio-row:hover {
+		padding: 4px;
+		border: 1px solid var(--main-action-color);
+}
+.studio-row.selected {
+		background: var(--main-action-color);
+		font-weight: bold;
+		color: white;
+}
+.studio-logo {
+		height: 40px;
+		line-height: 36px;
+		text-align: center;
+		width: 40px;
+}
+.studio-logo-img {
+		max-width:100%;
+		max-height:100%;
+		vertical-align: middle;
+		border-radius: 5px;
+}
+.studio-name {
+		margin-left: 6px;
+}

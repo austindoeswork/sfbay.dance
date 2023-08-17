@@ -21,8 +21,8 @@
 }
 
 .list-body {
-		height: calc(100vh - var(--list-header-height) - var(--header-height) - 40px);
-		min-height: calc(100vh - var(--list-header-height) - var(--header-height) - 40px);
+		height: calc(100vh - var(--list-header-height) - var(--header-height) - 70px);
+		/* min-height: calc(100vh - var(--list-header-height) - var(--header-height) - 40px); */
 
 		background: var(--color-grey);
 		overflow: scroll;

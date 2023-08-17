@@ -6,6 +6,10 @@
 		justify-content: space-between;
 }
 
+.header-mobile {
+		background: white;
+}
+
 #header-logo {
 		height: 30px;
 		width: 30px;
@@ -27,7 +31,7 @@
 .search {
 		border: none;
 		outline: none;
-		width: 100%;
+		width: 90%;
 		height: 24px;
 		padding-left: 6px;
 		font-size: 13px;
@@ -36,9 +40,11 @@
 .search-wrapper {
 		background: #fff;
 		border-radius: 10px;
+		border: 1px solid black;
 		height: 29px;
 		margin: 0 6px;
 		padding: 2px 0px 2px 10px;
-		width: 200px;
+		width: 100%;
+		max-width: 500px;
 }
 

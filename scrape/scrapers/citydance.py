@@ -45,8 +45,15 @@ def parse(html):
     # TODO error handling
     # find date
     date = re.search(date_re, html)
+    today = utils.today().date()
     if date is not None:
         date = date.group(1)
+        dtime = dateParser.parse(date).date()
+        print(dtime)
+        print(today)
+        print(dtime < today)
+        if dtime < today:
+             return events
     else:
         return events
 
