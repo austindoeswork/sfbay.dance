@@ -49,9 +49,6 @@ def parse(html):
     if date is not None:
         date = date.group(1)
         dtime = dateParser.parse(date).date()
-        print(dtime)
-        print(today)
-        print(dtime < today)
         if dtime < today:
              return events
     else:

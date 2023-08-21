@@ -1,6 +1,7 @@
 # local
 from db import db
 from scrapers import odc
+from scrapers import lines
 from scrapers import citydance
 from scrapers import dmt
 import utils
@@ -29,6 +30,7 @@ def main():
     events = []
     dmt_events = []
     odc_events = []
+    lines_events = []
     cd_events = []
 
     # DMT
@@ -50,6 +52,17 @@ def main():
     except Exception as error:
         print("odc:", error)
 
+    # LINES
+    print("lines: start")
+    try:
+        today = utils.today()
+        next_week = utils.today() + timedelta(days=7)
+        lines_events = lines.scrape(today)
+        lines_events += lines.scrape(next_week)
+        events += lines_events
+    except Exception as error:
+        print("lines:", error)
+
     #  CITY DANCE
     print("cds: start")
     try:
@@ -62,9 +75,10 @@ def main():
     event_db.reset()
 
     event_db.add_bulk(events)
-    print("dmt: ", len(dmt_events))
-    print("odc: ", len(odc_events))
-    print("cds: ", len(cd_events))
+    print("dmt: ",   len(dmt_events))
+    print("odc: ",   len(odc_events))
+    print("lines: ", len(lines_events))
+    print("cds: ",   len(cd_events))
 
     all_events = event_db.all()
 
