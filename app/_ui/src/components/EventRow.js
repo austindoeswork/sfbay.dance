@@ -34,10 +34,6 @@ export default class EventRow extends Component {
   componentDidMount() {
   }
 
-  componenetDidUpdate() {
-
-  }
-
   linkAction = (url) => {
     return (e) => {
       e.stopPropagation();

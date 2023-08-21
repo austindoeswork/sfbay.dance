@@ -18,6 +18,7 @@ class Main extends Component {
     super(props);
     this.state = {
       loaded: false,
+      query: null,
       srcData: {},
       studios: [],
       events: [],
@@ -81,8 +82,10 @@ class Main extends Component {
   }
 
   updateQuery = (query) => {
-    const newEvsByDate = queryEventsByDate(
+    let newEvsByDate = queryEventsByDate(
       this.state.srcEventsByDate, query);
+    newEvsByDate = filterEventsByDate(
+      newEvsByDate, this.state.currentFilter);
 
     this.setState({
       eventsByDate: newEvsByDate,
@@ -91,10 +94,10 @@ class Main extends Component {
   }
 
   updateFilter = (filter) => {
-    const newEvsByDate = filterEventsByDate(
-      this.state.srcEventsByDate, filter);
-
-    console.log(newEvsByDate);
+    let newEvsByDate = queryEventsByDate(
+      this.state.srcEventsByDate, this.state.query);
+    newEvsByDate = filterEventsByDate(
+      newEvsByDate, filter);
 
     this.setState({
       eventsByDate: newEvsByDate,
