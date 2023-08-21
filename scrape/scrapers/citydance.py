@@ -13,13 +13,15 @@ STUDIO_NAME  = "City Dance Studios"
 STUDIO_PRICE = 23.0
 STUDIO_LOGO  = "https://images.squarespace-cdn.com/content/v1/5738b9abab48de6e3b53189b/6193f76e-ce5e-4310-9ddb-80513a176733/city+dance+logo+for+mind+body+app.jpg?format=1500w"
 
-def scrape(num_days):
+NUM_DAYS = 6
+
+def scrape():
     events = []
     curl = '''curl 'https://www.citydancesf.com/%s' '''
     days = ['mondays', 'tuesdays', 'wednesdays', 'thursdays', 'fridays', 'saturdays', 'sundays']
 
     today = utils.today().weekday()
-    for i in range(num_days):
+    for i in range(NUM_DAYS):
         weekday = days[utils.rollover(today + i, len(days))]
         cmd = curl % (weekday)
 

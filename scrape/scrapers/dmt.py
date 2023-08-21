@@ -13,7 +13,7 @@ STUDIO_NAME  = "DMT"
 STUDIO_PRICE = 21.00
 STUDIO_LOGO  = "/imgs/dmt.png"
 
-def scrape(scrape_date):
+def scrape():
     events = []
 
     today     = utils.today()

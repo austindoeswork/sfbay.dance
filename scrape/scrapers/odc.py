@@ -2,6 +2,7 @@ import utils
 
 import re
 from datetime import datetime
+from datetime import timedelta
 from dateutil import parser as dateParser
 from pyquery import PyQuery as pq
 
@@ -9,31 +10,30 @@ STUDIO_NAME  = "ODC"
 STUDIO_PRICE = 21.00
 STUDIO_LOGO  = "https://odc.dance/sites/all/themes/odc/images/odc-dance-logo.png"
 
-def scrape(scrape_date):
+def scrape():
+    today = utils.today()
+    next_week = utils.today() + timedelta(days=7)
     events = []
 
-    date_str = scrape_date.strftime("%Y-%m-%d")
-    # TODO images
-    # TODO make scrape_date actually select the date, but this is ok for now I think
-    #  curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D=2023-07-18' '''
+    for scrape_date in [today, next_week]:
+        date_str = scrape_date.strftime("%Y-%m-%d")
+        curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D='''
+        curl += date_str + "'"
+        res = utils.shell(curl)
+        decoded = bytes(res, "utf-8").decode("unicode_escape")
 
-    curl = '''curl 'https://widgets.mindbodyonline.com/widgets/schedules/52115/load_markup?callback=jQuery36405655120515382499_1689698523814&options%5Bstart_date%5D='''
-    curl += date_str + "'"
-    res = utils.shell(curl)
-    decoded = bytes(res, "utf-8").decode("unicode_escape")
+        xml_re = '''class_sessions":"([\s\S]*)","filters'''
+        xml_match = re.search(xml_re, decoded)
+        xml = ""
 
-    xml_re = '''class_sessions":"([\s\S]*)","filters'''
-    xml_match = re.search(xml_re, decoded)
-    xml = ""
+        # TODO err handling
+        if xml_match != None:
+            xml = xml_match.group(1)
+        else:
+            print("ERR")
+            return []
 
-    # TODO err handling
-    if xml_match != None:
-        xml = xml_match.group(1)
-    else:
-        print("ERR")
-        return []
-
-    events = parse(xml)
+        events += parse(xml)
     return events
 
 def parse(html):

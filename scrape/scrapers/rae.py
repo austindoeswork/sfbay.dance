@@ -6,9 +6,9 @@ from datetime import timedelta
 from dateutil import parser as dateParser
 from pyquery import PyQuery as pq
 
-STUDIO_NAME  = "Alonzo King Lines Ballet"
-STUDIO_PRICE = 19.00
-STUDIO_LOGO  = "/imgs/lines.png"
+STUDIO_NAME  = "Rae Studios"
+STUDIO_PRICE = 23.00
+STUDIO_LOGO  = "/imgs/rae.png"
 
 def scrape():
     today = utils.today()
@@ -17,7 +17,9 @@ def scrape():
 
     for scrape_date in [today, next_week]:
         date_str = scrape_date.strftime("%Y-%m-%d")
-        curl = ''' curl 'https://widgets.mindbodyonline.com/widgets/schedules/7477/load_markup?callback=jQuery36402608481443029931_1692642433260&options%5Bstart_date%5D='''
+        # TODO images
+        curl = ''' curl 'https://widgets.mindbodyonline.com/widgets/schedules/145617/load_markup?callback=jQuery36402608481443029931_1692642433260&options%5Bstart_date%5D='''
+
         curl += date_str + "'"
         res = utils.shell(curl)
         decoded = bytes(res, "utf-8").decode("unicode_escape")
