@@ -20,6 +20,7 @@ function cleanTitle(title) {
     [ /intermediate/ , "Int." ],
     [ /Advanced/ , "Adv." ],
     [ /advanced/ , "Adv." ],
+    [ /Dance Technique \/ Choreography/ , "Dance"],
   ]
 
   let newTitle = "";

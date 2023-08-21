@@ -18,7 +18,7 @@ class Main extends Component {
     super(props);
     this.state = {
       loaded: false,
-      query: null,
+      query: "",
       srcData: {},
       studios: [],
       events: [],
