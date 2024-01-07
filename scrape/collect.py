@@ -25,11 +25,11 @@ def main():
 
 
     modules = [    \
-        odc,       \
-        lines,     \
-        citydance, \
+        # odc,       \
+        # lines,     \
+        # citydance, \
         dmt,       \
-        rae,       \
+        # rae,       \
     ]
 
     events = []
