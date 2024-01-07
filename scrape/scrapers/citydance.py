@@ -77,7 +77,7 @@ def parse_title(title):
 
     # TODO what if split fails
     class_title = words[0]
-    teacher = utils.clean_teacher(words[-1])
+    teacher = words[-1].strip()
 
     return [class_title, teacher]
 
