@@ -33,17 +33,16 @@ def scrape():
     time.sleep(4)
     today_html = driver.page_source
 
-
     driver.get(nextweek_url)
     time.sleep(4)
     nextweek_html = driver.page_source
+
     driver.quit()
 
     #  FOR TESTING
     #  html = ""
     #  with open('tmp_dmt_full.html', 'r') as file:
         #  html = file.read()
-
 
     events = parse(today_html)
     events += parse(nextweek_html)
