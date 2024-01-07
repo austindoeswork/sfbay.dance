@@ -43,7 +43,7 @@ Python 3.10.6
 % pip install -r requirements.txt
 % pip install -e .
 
-# create a config in scrape/scraper_config.json
+# create a config in scrape/scrape_config.json
 {
 	"db_path": "/<PATH_TO>/sfbay.dance/app/assets/events.json"
 }

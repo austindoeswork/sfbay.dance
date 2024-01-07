@@ -53,13 +53,13 @@ def parse(html):
     events = []
 
     parsed = pq(html)
-    main = parsed("table#classSchedule-mainTable")
+    main = parsed("#classSchedule-mainTable")
 
     date_re   = '''class="headText">'''
-    event_re  = '''"(oddRow|evenRow)">'''
+    event_re  = '''"(oddRow|evenRow) row">'''
 
     current_date_str = None
-    for r in main("tbody>tr"):
+    for r in main('div').items():
         row = pq(r)
 
         # date row
@@ -77,6 +77,24 @@ def parse(html):
     return events
 
 def parse_event(row, date_str):
+    """
+    Args:
+        row: A div containing the event data. This should look like:
+            <div class="evenRow row">
+            <div class="col-1">
+                <div class="col col-first" style="width: 172px;">6:45 pm  PST</div>
+                <div class="col" style="width: 177px;"><input type="button" name="but2491" class="SignupButton" onclick="_gaq.push(['_trackEvent', 'Class_Schedule', 'click', 'Sign_Up_Now_button']);promptLogin('', ' Hip Hop (all levels)  at 6:45 pm  on Monday, 1/8/2024 with Kyle Limin', '/ASP/res_a.asp?tg=34&amp;classId=2491&amp;classDate=1/8/2024&amp;clsLoc=1'); " value="Sign Up Now"/></div>
+            </div>
+            <div class="col-2">
+                <div class="col" style="width: 177px;"><a href="javascript:;" name="cid501" class="modalClassDesc"> Hip Hop (all levels) </a></div>
+                <div class="col" style="width: 177px;">Kyle Limin</div>
+                <div class="col" style="width: 177px;">1 hour &amp;15 minutes</div>
+            </div>
+            </div>
+        date_str: the date of the event. This should look like `'Mon January 8, 2024'`.
+
+
+    """
     event = utils.Event(STUDIO_NAME)
 
     if date_str == None: return event
@@ -85,19 +103,19 @@ def parse_event(row, date_str):
     dur1_re = '''(\d{1,2}).{4,}?(\d{1,2})'''
     dur2_re = '''(\d{1,2})'''
 
-    details = row("td")
-    time_td     = details.eq(0)
-    button_td   = details.eq(1)
-    title_td    = details.eq(2)
-    teacher_td  = details.eq(3)
-    duration_td = details.eq(4)
+    time_td = row.find('.col-1 .col-first')
+    title_td = row.find('.col-2 .col:nth-child(1)')
+    teacher_td = row.find('.col-2 .col:nth-child(2)')
+    duration_td = row.find('.col-2 .col:nth-child(3)')
+    button_td = row(".SignupButton").parent()
 
-    # time
     time_str = " ".join(time_td.text().split()[:2])
     start_date = dateParser.parse(date_str + " " + time_str)
     event.date = start_date
 
     # link
+    if not button_td:
+        return event
     button_match = re.search(button_re, button_td.outer_html())
     if button_match != None:
         link = button_td("input").attr("onclick")

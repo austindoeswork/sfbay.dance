@@ -41,6 +41,9 @@ class Event:
         e.notes    = d["notes"]
         return e
 
+    def __repr__(self):
+        return f"Event({self.__dict__})"
+
     def hash(self):
         s = self.location + self.teacher + self.date.strftime('%m%d%y%H%M')
         hash_object = hashlib.md5(bytes(s, encoding='utf8'))
