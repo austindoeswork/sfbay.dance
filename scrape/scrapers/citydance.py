@@ -29,9 +29,12 @@ def parse(html):
     parsed = pq(html)
 
     for session in parsed(".class-class-row"):
-        event = parse_session(pq(session))
-        if event.is_valid():
-            events.append(event)
+        try:
+            event = parse_session(pq(session))
+            if event.is_valid():
+                events.append(event)
+        except:
+            pass
 
     return events
 
@@ -45,13 +48,17 @@ def parse_session(session):
     event.title = title
     event.teacher = teacher
 
+    # check for PW
+    if "PERFORMANCE WORKSHOP" in event.title:
+        return event
+
     # link
     btn = session(".btn-class-signup")
     session_id = btn.attr('data-type')
     link = "https://app.acuityscheduling.com/schedule.php?appointmentType=%s&owner=22968233" % session_id
+    event.link = link
 
     # date
-    event.link = link
     date = dateParser.parse(btn.attr('data-time'))
     event.date = date
 
@@ -68,7 +75,6 @@ def parse_session(session):
     price = float(price_str[1:])
     event.price = price
 
-    event.pprint()
     return event
 
 def parse_title(title):
